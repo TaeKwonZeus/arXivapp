@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 
     id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
+
     kotlin("plugin.serialization") version "2.1.0"
 }
 
@@ -68,7 +70,7 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.xml)
     implementation(libs.ktor.client.resources)
 
-    implementation(libs.androidx.room.runtime.v261)
+    implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
 
     implementation(libs.hilt.android)
