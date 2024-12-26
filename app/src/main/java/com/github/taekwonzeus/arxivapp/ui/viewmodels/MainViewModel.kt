@@ -1,7 +1,7 @@
 package com.github.taekwonzeus.arxivapp.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
-import com.github.taekwonzeus.arxivapp.services.ApiService
+import com.github.taekwonzeus.arxivapp.api.ApiService
 import com.github.taekwonzeus.arxivapp.ui.models.MainModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
