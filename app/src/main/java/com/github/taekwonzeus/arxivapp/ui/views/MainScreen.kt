@@ -11,5 +11,6 @@ import com.github.taekwonzeus.arxivapp.ui.viewmodels.MainViewModel
 fun MainScreen(modifier: Modifier, viewModel: MainViewModel) {
     val state by viewModel.state.collectAsState()
 
-    Text("Main screen")
+    println(state.toString())
+    Text(state.toString())
 }
