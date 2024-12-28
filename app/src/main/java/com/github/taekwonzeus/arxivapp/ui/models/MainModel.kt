@@ -1,3 +1,5 @@
 package com.github.taekwonzeus.arxivapp.ui.models
 
-class MainModel
+import com.github.taekwonzeus.arxivapp.api.ArxivEntry
+
+data class MainModel(val entries: List<ArxivEntry>)

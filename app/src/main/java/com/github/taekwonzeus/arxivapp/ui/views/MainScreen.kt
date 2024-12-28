@@ -14,17 +14,21 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.github.taekwonzeus.arxivapp.ui.components.ArxivCard
 import com.github.taekwonzeus.arxivapp.ui.viewmodels.MainViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier, viewModel: MainViewModel) {
     val state by viewModel.state.collectAsState()
-    Column() {
+
+    Column {
         Box {
             Column {
                 Row {
@@ -43,8 +47,11 @@ fun MainScreen(modifier: Modifier = Modifier, viewModel: MainViewModel) {
                     .padding(10.dp)
                     .fillMaxSize()
             ) {
-                items(state) { entry ->
-                    ArxivCard(entry)
+                val entries = state.entries
+
+                when (entries.size) {
+                    0 -> item { Text("Nothing here") }
+                    else -> items(entries) { entry -> ArxivCard(entry) }
                 }
             }
         }
