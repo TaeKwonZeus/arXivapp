@@ -4,7 +4,6 @@ import android.util.Log
 import android.util.Xml
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.defaultRequest
-import io.ktor.client.plugins.timeout
 import io.ktor.client.request.accept
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsBytes
@@ -37,7 +36,7 @@ class ApiService @Inject constructor() {
     suspend fun queryRaw(query: String): List<ArxivEntry> {
         val res: ByteArray;
         try {
-            res = client.get("https://128.84.21.203/api/query?search_query=$query") {
+            res = client.get("https://export.arxiv.org/api/query?search_query=$query") {
 
             }.bodyAsBytes()
         } catch (e: Exception) {
