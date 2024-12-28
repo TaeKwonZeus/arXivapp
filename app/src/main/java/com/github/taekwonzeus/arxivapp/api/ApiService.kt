@@ -1,8 +1,10 @@
 package com.github.taekwonzeus.arxivapp.api
 
+import android.util.Log
 import android.util.Xml
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.plugins.timeout
 import io.ktor.client.request.accept
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsBytes
@@ -12,6 +14,7 @@ import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import java.io.ByteArrayInputStream
 import javax.inject.Inject
+import kotlin.system.exitProcess
 
 data class ArxivEntry(
     val title: String?,
@@ -32,8 +35,15 @@ class ApiService @Inject constructor() {
     }
 
     suspend fun queryRaw(query: String): List<ArxivEntry> {
-        val res = client.get("https://export.arxiv.org/api/query?search_query=$query").bodyAsBytes()
+        val res: ByteArray;
+        try {
+            res = client.get("https://128.84.21.203/api/query?search_query=$query") {
 
+            }.bodyAsBytes()
+        } catch (e: Exception) {
+            Log.e("error!!!", e.message!!)
+            exitProcess(1)
+        }
         val parser = Xml.newPullParser()
         parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
 
