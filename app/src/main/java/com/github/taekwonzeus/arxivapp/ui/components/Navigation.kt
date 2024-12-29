@@ -18,11 +18,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.github.taekwonzeus.arxivapp.ui.viewmodels.MainViewModel
+import com.github.taekwonzeus.arxivapp.ui.views.ArticleScreen
 import com.github.taekwonzeus.arxivapp.ui.views.MainScreen
 
 class Route(val name: String, val label: String, val icon: @Composable () -> Unit)
 
 val routes = listOf(
+    Route("main", "Main") { Icon(Icons.Default.Home, "Main") },
     Route("main", "Main") { Icon(Icons.Default.Home, "Main") }
 )
 
@@ -53,10 +55,18 @@ fun BottomNavbar(navController: NavController) {
 }
 
 @Composable
-fun NavigationHost(modifier: Modifier, navController: NavHostController, mainViewModel: MainViewModel) {
-   NavHost(navController, "main", modifier) {
-       composable("main") {
-           MainScreen(Modifier.padding(0.dp), mainViewModel)
-       }
-   }
+fun NavigationHost(
+    modifier: Modifier,
+    navController: NavHostController,
+    mainViewModel: MainViewModel
+
+) {
+    NavHost(navController, "main", modifier) {
+        composable("main") {
+            MainScreen(modifier.padding(0.dp), mainViewModel, navController)
+        }
+        composable("article") {
+            ArticleScreen(modifier, mainViewModel)
+        }
+    }
 }

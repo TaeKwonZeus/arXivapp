@@ -12,6 +12,7 @@ import kotlinx.io.IOException
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import java.io.ByteArrayInputStream
+import java.util.TreeSet
 import javax.inject.Inject
 import kotlin.system.exitProcess
 
@@ -19,7 +20,7 @@ data class ArxivEntry(
     val title: String?,
     val summary: String?,
     val links: List<ArxivLink>,
-    val authors: List<String>,
+    val authors: TreeSet<String>,
 )
 
 data class ArxivLink(val href: String, val rel: String, val type: String)
@@ -36,7 +37,7 @@ class ApiService @Inject constructor() {
     suspend fun queryRaw(query: String): List<ArxivEntry> {
         val res: ByteArray;
         try {
-            res = client.get("https://export.arxiv.org/api/query?search_query=$query") {
+            res = client.get("https://export.arxiv.org/api/query?search_query=$query&max_results=1000") {
 
             }.bodyAsBytes()
         } catch (e: Exception) {
@@ -92,7 +93,7 @@ class ApiService @Inject constructor() {
                 else -> skip(parser)
             }
         }
-        return ArxivEntry(title, summary, links, authors)
+        return ArxivEntry(title, summary, links, TreeSet(authors))
     }
 
     // Processes title tags in the feed.

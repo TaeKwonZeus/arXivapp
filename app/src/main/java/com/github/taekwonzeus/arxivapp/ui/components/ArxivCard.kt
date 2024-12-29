@@ -13,14 +13,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.github.taekwonzeus.arxivapp.R
 import com.github.taekwonzeus.arxivapp.api.ArxivEntry
+import com.github.taekwonzeus.arxivapp.ui.viewmodels.MainViewModel
 
 @Composable
-fun ArxivCard(arxivEntry: ArxivEntry) {
+fun ArxivCard(arxivEntry: ArxivEntry, viewModel: MainViewModel, navController: NavController) {
     OutlinedCard(
         modifier = Modifier.padding(4.dp).fillMaxWidth(),
-        onClick = { /*TODO*/ }
+        onClick = {
+            viewModel.art = arxivEntry
+            navController.navigate("article")
+        }
     ) {
         Row {
             Icon(
